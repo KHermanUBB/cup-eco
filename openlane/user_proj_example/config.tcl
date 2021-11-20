@@ -21,26 +21,17 @@ set script_dir [file dirname [file normalize [info script]]]
 set ::env(DESIGN_NAME) user_proj_example
 
 set ::env(VERILOG_FILES) "\
-	$script_dir/../../verilog/rtl/abs.v \
-        $::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/cic.v \
-	$script_dir/../../verilog/rtl/comparator.v \
-	$script_dir/../../verilog/rtl/clk_div.v \
-	$script_dir/../../verilog/rtl/multiplier.v \
-	$script_dir/../../verilog/rtl/FILTERS.v \
+    $::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
 	$script_dir/../../verilog/rtl/SonarOnChip.v \
-	$script_dir/../../verilog/rtl/SR_latch.v \
 	$script_dir/../../verilog/rtl/user_proj_example.v"
 
 
 
 
 set ::env(DESIGN_IS_CORE) 0
-
 set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "wb_clk_i"
 set ::env(CLOCK_PERIOD) "40"
-
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2700 3100"
 set ::env(DIE_AREA) "0 0 2700 3100"
@@ -48,15 +39,18 @@ set ::env(DIE_AREA) "0 0 2700 3100"
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 set ::env(PL_SKIP_INITIAL_PLACEMENT) 0
 #set ::env(PL_BASIC_PLACEMENT) 1
-set ::env(PL_TARGET_DENSITY) 0.1
+set ::env(PL_TARGET_DENSITY) 0.25
 set ::env(FP_CORE_UTIL) 60
 set ::env(GLB_RT_ALLOW_CONGESTION) 1
 set ::env(ROUTING_CORES) 8
 
 #set ::env(PL_RESIZER_MAX_WIRE_LENGTH) 100
 #set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.2  4 chann
-#set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.25 8 chann placement 0.35
-set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.2
+set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.25  
+#8 chann placement 0.35
+set ::env(PL_RESIZER_MAX_SLEW_MARGIN) 30
+set ::env(PL_RESIZER_MAX_CAP_MARGIN) 30
+#set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.2
 #set ::env(PL_RESIZER_HOLD_BUFFER_PERCENT) 90
 #set ::env(SPEF_WIRE_MODEL) "Pi"
 

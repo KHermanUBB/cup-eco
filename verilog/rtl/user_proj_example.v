@@ -35,7 +35,7 @@
  *-------------------------------------------------------------
  */
 
-`define MAX_SOC 16
+`define MAX_SOC 8
 `define BUS_WIDTH 16 
 module user_proj_example #(
     parameter BITS = 32
@@ -70,6 +70,7 @@ module user_proj_example #(
     // IRQ
     output [2:0] irq
 );
+
 
   localparam  STATUS_ADDR	    =  'd0; 
   localparam  PRE_ADDR 			=  'd1; 
@@ -128,37 +129,23 @@ module user_proj_example #(
   assign io_oeb[6] = 1'b1;
   assign io_oeb[7] = 1'b1;
   assign io_oeb[8] = 1'b1;
-  assign io_oeb[9] = 1'b1;
-  assign io_oeb[10] = 1'b1;
-  assign io_oeb[11] = 1'b1;
-  assign io_oeb[12] = 1'b1;
-  assign io_oeb[13] = 1'b1;
-  assign io_oeb[14] = 1'b1;
-  assign io_oeb[15] = 1'b1;
-
+ 
 
 
   always@(addr  or wb_valid or addr_valid) begin
 
 	if (wb_valid && addr_valid)  begin  
         case(addr[10:4])   
-				 'd0 :  begin  valid_i[0]  <= 1'b1; end  
-				 'd1 :  begin  valid_i[1]  <= 1'b1; end 
-				 'd2 :  begin  valid_i[2]  <= 1'b1; end 
-				 'd3 :  begin  valid_i[3]  <= 1'b1; end 
-				 'd4 :  begin  valid_i[4]  <= 1'b1; end 
-				 'd5 :  begin  valid_i[5]  <= 1'b1; end 
-				 'd6 :  begin  valid_i[6]  <= 1'b1; end 
-				 'd7 :  begin  valid_i[7]  <= 1'b1; end 
-				 'd8 :  begin  valid_i[8]  <= 1'b1; end 
-				 'd9 :  begin  valid_i[9]  <= 1'b1; end 
-				 'd10:  begin  valid_i[10] <= 1'b1; end 
-				 'd11:  begin  valid_i[11] <= 1'b1; end 
-				 'd12:  begin  valid_i[12] <= 1'b1; end 
-				 'd13:  begin  valid_i[13] <= 1'b1; end 
-				 'd14:  begin  valid_i[14] <= 1'b1; end 
-				 'd15:  begin  valid_i[15] <= 1'b1; end 
-                  default: begin valid_i <= 0 ;  end
+				 'd0 :  begin  valid_i[0]  = 1'b1; end  
+				 'd1 :  begin  valid_i[1]  = 1'b1; end  
+				 'd2 :  begin  valid_i[2]  = 1'b1; end  
+				 'd3 :  begin  valid_i[3]  = 1'b1; end  
+				 'd4 :  begin  valid_i[3]  = 1'b1; end  
+				 'd5 :  begin  valid_i[4]  = 1'b1; end  
+				 'd6 :  begin  valid_i[5]  = 1'b1; end  
+				 'd7 :  begin  valid_i[6]  = 1'b1; end  
+				 'd8 :  begin  valid_i[7]  = 1'b1; end  
+                  default: begin valid_i   = 0 ;   end
 		endcase
     end
     else 
@@ -167,86 +154,52 @@ module user_proj_example #(
 
 
 
-  always@(valid_i   or dat_o[0] or dat_o[1] or dat_o[2] or dat_o[3] or dat_o[4] or dat_o[5] or dat_o[6] or dat_o[7] or dat_o[8] or dat_o[9] or dat_o[10] or dat_o[11] or dat_o[12] or dat_o[13] or dat_o[14] or dat_o[15] 
-or ack_o[0] or ack_o[1] or ack_o[2] or ack_o[3] or ack_o[4] or ack_o[5] or ack_o[6] or ack_o[7] or ack_o[8] or ack_o[9] or ack_o[10] or ack_o[11] or ack_o[12] or ack_o[13] or ack_o[14] or ack_o[15] 
-                  ) begin
+  always@(valid_i   or dat_o[0] or ack_o[0] or dat_o[1] or dat_o[2] or dat_o[3] or ack_o[1] or ack_o[2] or ack_o[3]
+   or dat_o[4] or ack_o[4] or dat_o[5] or dat_o[6] or dat_o[7] or dat_o[8] or ack_o[5] or ack_o[6] or ack_o[7]       )
+  begin
         case(valid_i)   
-				 'h1     :  begin 
-							wbs_dat <=  dat_o[0];
-							wbs_ack <=  ack_o[0];
+                		 'h1     :  begin 
+							wbs_dat =  dat_o[0];
+							wbs_ack =  ack_o[0];
                             end
 				 'h2     :  begin 
-							wbs_dat <=  dat_o[1];
-							wbs_ack <=  ack_o[1];
+							wbs_dat =  dat_o[1];
+							wbs_ack =  ack_o[1];
                             end
 				 'h4     :  begin 
-							wbs_dat <=  dat_o[2];
-							wbs_ack <=  ack_o[2];
+							wbs_dat =  dat_o[2];
+							wbs_ack =  ack_o[2];
                             end
 				 'h8     :  begin 
-							wbs_dat <=  dat_o[3];
-							wbs_ack <=  ack_o[3];
-                            end
-				 'h10    :  begin 
-							wbs_dat <=  dat_o[4];
-							wbs_ack <=  ack_o[4];
+							wbs_dat =  dat_o[3];
+							wbs_ack =  ack_o[3];
+                            end  
+                 'h10    :  begin 
+							wbs_dat =  dat_o[4];
+							wbs_ack =  ack_o[4];
                             end
 				 'h20    :  begin 
-							wbs_dat <=  dat_o[5];
-							wbs_ack <=  ack_o[5];
+							wbs_dat =  dat_o[5];
+							wbs_ack =  ack_o[5];
                             end
 				 'h40    :  begin 
-							wbs_dat <=  dat_o[6];
-							wbs_ack <=  ack_o[6];
+							wbs_dat =  dat_o[6];
+							wbs_ack =  ack_o[6];
                             end 
 				 'h80    :  begin 
-							wbs_dat <=  dat_o[7];
-							wbs_ack <=  ack_o[7];
-                            end 
-				 'h100   :  begin 
-							wbs_dat <=  dat_o[8];
-							wbs_ack <=  ack_o[8];
-                            end 
-				 'h200   :  begin 
-							wbs_dat <=  dat_o[9];
-							wbs_ack <=  ack_o[9];
-                            end 
-				 'h400   :  begin 
-							wbs_dat <=  dat_o[10];
-							wbs_ack <=  ack_o[10];
-                            end 
-				 'h800   :  begin 
-							wbs_dat <=  dat_o[11];
-							wbs_ack <=  ack_o[11];
-                            end 
-				 'h1000  :  begin 
-							wbs_dat <=  dat_o[12];
-							wbs_ack <=  ack_o[12];
-                            end 
-				 'h2000  :  begin 
-							wbs_dat <=  dat_o[13];
-							wbs_ack <=  ack_o[13];
-                            end
-				 'h4000  :  begin 
-							wbs_dat <=  dat_o[14];
-							wbs_ack <=  ack_o[14];
-                            end 
-				 'h8000  :  begin 
-							wbs_dat <=  dat_o[15];
-							wbs_ack <=  ack_o[15];
-                            end 
-                  default: begin 
-							wbs_dat <=  0;
-							wbs_ack <=  0;
+							wbs_dat =  dat_o[7];
+							wbs_ack =  ack_o[7];
+		            end 
+
+			    default: begin 
+							wbs_dat =  0;
+							wbs_ack =  0;
                            end
 		endcase
   end
 
 assign wbs_dat_o =   (valid_i != 0)  ? {{16{wbs_dat[15]}},wbs_dat} : rdata;
 assign wbs_ack_o =   (valid_i != 0)  ? wbs_ack                     : wbs_done;
-
-
-
 
 	always@(posedge wb_clk_i) begin
 		if(wb_rst_i) begin
@@ -285,9 +238,7 @@ assign wbs_ack_o =   (valid_i != 0)  ? wbs_ack                     : wbs_done;
 			status  <= 0;
 		end 
         else 
-          status[31:0] <= cmp[31:0];
-          prescaler[25:24] <= cmp[33:32];
-       
+          status <= cmp;
     end
 
 
@@ -325,6 +276,7 @@ SonarOnChip   soc1(
     .mclear(mclear),
     .cmp(cmp[0])
 	);
+
 
 SonarOnChip   soc2(
 
@@ -379,7 +331,6 @@ SonarOnChip   soc4(
     .mclear(mclear),
     .cmp(cmp[3])
 	);
-
 SonarOnChip   soc5(
 
     .wb_clk_i(wb_clk_i),
@@ -452,154 +403,92 @@ SonarOnChip   soc8(
     .cmp(cmp[7])
 	);
 
-SonarOnChip   soc9(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[8]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[8]),
-    .wbs_dat_o(dat_o[8]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[9]),
-    .mclear(mclear),
-    .cmp(cmp[8])
-	);
-
-SonarOnChip   soc10(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[9]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[9]),
-    .wbs_dat_o(dat_o[9]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[10]),
-    .mclear(mclear),
-    .cmp(cmp[9])
-	);
-
-SonarOnChip   soc11(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[10]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[10]),
-    .wbs_dat_o(dat_o[10]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[11]),
-    .mclear(mclear),
-    .cmp(cmp[10])
-	);
-
-SonarOnChip   soc12(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[11]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[11]),
-    .wbs_dat_o(dat_o[11]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[12]),
-    .mclear(mclear),
-    .cmp(cmp[11])
-	);
-
-SonarOnChip   soc13(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[12]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[12]),
-    .wbs_dat_o(dat_o[12]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[13]),
-    .mclear(mclear),
-    .cmp(cmp[12])
-	);
-
-
-SonarOnChip   soc14(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[13]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[13]),
-    .wbs_dat_o(dat_o[13]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[14]),
-    .mclear(mclear),
-    .cmp(cmp[13])
-	);
-
-SonarOnChip   soc15(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[14]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[14]),
-    .wbs_dat_o(dat_o[14]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[15]),
-    .mclear(mclear),
-    .cmp(cmp[14])
-	);
-
-SonarOnChip   soc16(
-
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
-    .wb_valid_i(valid_i[15]),
-    .wbs_adr_i(adr_i),
-    .wbs_dat_i(dat_i),
-    .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o[15]),
-    .wbs_dat_o(dat_o[15]),
-    
-    .ce_pdm(ce_pdm),
-    .ce_pcm(ce_pcm),
-    .pdm_data_i(io_in[16]),
-    .mclear(mclear),
-    .cmp(cmp[15])
-	);
-
-/*  ----------------------  STRUCTURAL DESIGN ENDS ------------------------- */
-
-
-
 endmodule
+
+
+/*  ---------------------- CLOCK DIVIDERS ------------------------- */
+/*
+with 8 MHz cristal 
+PLL feedback divider = 18 
+18 *8 = 144 
+main clock 
+PLL 1 divider  = 6
+144/6 = 24
+second clock 
+144/3 = 48
+*/
+
+module micclk(clk, rst, mclk, ce_pdm);
+  input clk, rst;
+  output mclk;
+  output ce_pdm;
+  
+  reg  tmp1, tmp2;
+  
+  assign mclk = ~(tmp1 | tmp2);
+  reg [3:0] cnt1, cnt2;
+
+/* delay one cycle vs. MIC Clk*/
+  assign ce_pdm = cnt1==4'b001 ? 1 : 0;
+
+  always @(posedge clk)
+    begin
+      if (rst) begin
+            cnt1 <= 0;
+            tmp1 <= 0;
+      end
+      else
+        cnt1 <= cnt1 + 1;
+      if (cnt1 >=  2)
+            tmp1 <=  1'b1;
+      if (cnt1 == 4) begin
+          cnt1 <= 0;
+          tmp1 <= 0;
+      end
+    end
+  
+  always @(negedge clk)
+    begin
+      if (rst) begin
+            cnt2 <= 0;
+            tmp2 <= 0;
+      end
+      else
+        cnt2 <= cnt2 + 1;
+      if (cnt2 >=  2)
+            tmp2 <=  1'b1;
+      if (cnt2 == 4) begin
+          cnt2 <= 0;
+          tmp2 <= 0;
+      end
+    end
+endmodule
+
+
+module pcm_clk(clk, rst, prescaler, ce_pcm); 
+
+  input clk, rst;
+  input [9:0] prescaler;
+  output reg ce_pcm;
+  
+  reg [9:0] count;
+  
+  always@(posedge clk) begin 
+    if(rst)begin 
+      ce_pcm <=0;
+      count <= 0;
+    end
+    else if(count == prescaler) begin
+        ce_pcm <= 1;
+        count <=0;
+    end
+    else begin
+    	count <= count + 1;
+        ce_pcm <= 0;
+    end
+    
+  end
+
+endmodule 
+
 `default_nettype wire

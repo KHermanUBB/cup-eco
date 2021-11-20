@@ -26,11 +26,4 @@
     `include "user_project_wrapper.v"
     `include "user_proj_example.v"
     `include "SonarOnChip.v"
-    `include "abs.v"
-    `include "cic.v"
-    `include "clk_div.v"
-    `include "comparator.v"
-    `include "FILTERS.v"
-    `include "multiplier.v"
-    `include "SR_latch.v"
 `endif
